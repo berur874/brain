@@ -308,4 +308,97 @@ if result:
 else:
     print("Value not found in the BST") 
 
-print("\nLowest value:", lowestNode(root).info)       
+print("\nLowest value:", lowestNode(root).info) 
+
+# AVL TREES --> It is a tyoe of binary search tree.
+""" 
+AVL trees are self balancing, which means thaat the tree height is kept to a minimum so that a very fast runtime is guaranteed for searching, inserting and deleting nodes
+with time complexity O(log n)
+the difference btwn an AVL and BST is that AVL trees do rotation operations in addition, to keep the tree balance. 
+"""
+
+# Implementing AVL tree in python
+
+class treeNode: # class and node definition 
+    def __init__(self, data):
+      self.data = data # stores a node's value
+      self.left = None # Pointer to the left child
+      self.right = None # Pointer to the Right child
+      self.height = 1 # Height of the node(new node is a leaf, so height = 1)
+
+def getHeight(node): # if node is empty, height = 0, else heigh = 1
+    if not node: 
+        return 0
+    return node.height
+
+def getBalance(node): # if node is empty, balance = 0, else, get BF
+    if not node:
+        return 0
+    return getHeight(node.left) - getHeight(node.right) # where BF is gotten
+
+def rightRotate(y):
+    print('Rotate right on node', y.data) 
+    x = y.left # x becomes new root
+    T2 = x.right # saves x's right subtree
+    x.right = y #y becomes x's right child
+    y.left = T2 #
+    y.height = 1 + max(getHeight(y.left), getHeight(y.right))
+    x.height = 1 + max(getHeight(x.left), getHeight(x.right))
+    return x
+
+def leftRotate(x):
+    print('Rotate left on node', x.data)
+    y = x.right
+    T2 = y.left
+    y.left = x
+    x.right = T2
+    x.height = 1 + max(getHeight(x.left), getHeight(x.right))
+    y.height = 1 + max(getHeight(y.left), getHeight(y.right))
+    return y   
+
+def insert (node, data):
+    if not node:
+        return treeNode(data)
+
+    if data < node.data:
+        node.left = insert(node.left, data)
+    elif data > node.data:
+        node.right = insert(node.right, data)
+
+    # Update the balance factor and balace the tree
+    node.height = 1 + max(getHeight(node.left), getHeight(node.right))
+    balance = getBalance(node)
+
+    # Balancing the tree
+    # left left rotation
+    if balance > 1 and getBalance(node.left) >= 0:
+        return rightRotate(node)
+
+    #left Right rotation
+    if balance > 1 and getBalance(node.right) <= 0:
+        node.left = leftRotate(node.left)
+        return rightRotate(node)
+
+    #Right right rotation
+    if balance < -1 and getBalance(node.right) <= 0:
+        return leftRotate(node) 
+
+    # Right left rotation
+    if balance < -1 and getBalance(node.right) > 0:
+        node.right = rightRotate(node.right)
+        return leftRotate(node)
+    return node
+
+def inOrder(node):
+    if node is None:
+        return
+    inOrder(node.left)
+    print(node.data, end=",")
+    inOrder(node.right)
+
+root = None
+letters = ['C','B','E','A','D','H','G','F']
+for letter in letters:
+    root = insert(root, letter)
+
+inOrder(root)     
