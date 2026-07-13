@@ -401,4 +401,78 @@ letters = ['C','B','E','A','D','H','G','F']
 for letter in letters:
     root = insert(root, letter)
 
-inOrder(root)     
+inOrder(root) 
+print("\n")    
+
+
+"""
+LINEAR SEARCH(sequential search) --> it is the simplest search algorithm. It checks each element one by one
+                     HOW IT WORKS
+    1)Go through the array value by value from the start
+    2)Compare each value to check if it is equal to the value we are looking for
+    3) If the value is found, return the index of that value
+    4) If the end of the array is reached and the value is not found, return -1 to indicate thet the
+       value was not found                 
+"""
+#implementation of LINEAR SEARCH
+def linearSearch(arr, targetVal):
+    for i in range(len(arr)):
+        if arr[i] == targetVal:
+            return i
+    return -1
+
+mylist =[3, 7, 9, 5, 1, 8, 4, 6]
+x = int(input("Enter number:"))
+result = linearSearch(mylist, x)
+
+if result != -1:
+    print("Found at index", result)
+else:
+    print("Not found")    
+
+
+ # BINARY SEARCH ALGORITHM
+"""
+The Binary Search Algorithm searches through a sorted array and returns the
+index value it searches for.
+It is much faster than linear search, but requires a sorted array to work.
+         ---HOW IT WORKS---
+    1)Check the value in the center of the array
+    2) If the target is lower, search the left half of the array. If the target
+       value is higher, search the right half.
+    3) Continue step 1 and 2 for the new reduced part of the array until the
+       target is found or until the search area is empty.
+    4) If the value is found, return the target value index. If the target value
+       is not found, return -1.      
+"""   
+# implementation of the Binary Search Algorithm
+
+myList =[1,2,3,4,5,6,7,8,9,10] # declaration of the array
+y = int(input("Enter number to search:")) # what the user wants to search
+# function for the binary search
+def binarySearch(arry,target): 
+    # initialize pointers
+    left = 0 # starts at index 0
+    right =len(arry) -1 # starts at the last index 
+
+    while left <= right:
+        mid = (left + right) // 2
+
+        if arry[mid] == target:
+            return mid
+        
+        if arry[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+
+    return -1
+
+ans = binarySearch(myList, y)
+
+if ans != -1 :
+    print("Found at Index", ans)
+else:
+    print("Not found")  
+
+ # sorting algorithms     
