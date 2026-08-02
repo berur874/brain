@@ -310,7 +310,7 @@ else:
 
 print("\nLowest value:", lowestNode(root).info) 
 
-# AVL TREES --> It is a tyoe of binary search tree.
+# AVL TREES --> It is a type of binary search tree.
 """ 
 AVL trees are self balancing, which means thaat the tree height is kept to a minimum so that a very fast runtime is guaranteed for searching, inserting and deleting nodes
 with time complexity O(log n)
@@ -476,3 +476,75 @@ else:
     print("Not found")  
 
  # sorting algorithms     
+#  BUBBLE SORT
+mylist = [64, 34, 25, 12, 22, 11, 90, 5]
+
+n = len(mylist)
+for i in range(n-1):
+    swapped = False
+    for j in range (n-i-1):
+        if mylist[j] > mylist[j+1]:
+            mylist[j], mylist[j+1] = mylist[j+1], mylist[j]
+            swapped = True
+    if not swapped:
+        break
+            
+print(mylist)            
+
+# SELECTION SORT
+myArray = [29, 12, 65, 23, 99, 6, 35, 44, 56]
+n = len(myArray)
+for i in range (n-1):
+  min_val = i
+  for j in range(i+1, n):
+    if myArray[j] < myArray[min_val]:
+         min_val = j
+          
+  myArray[i], myArray[min_val] = myArray[min_val], myArray[i]
+    
+print(myArray)
+
+#INSERTION SORT
+for i in range (1,n):
+    insert_index = i
+    current_value = myArray[i]
+    for j in range(i-1, -1, -1):
+        if myArray[j] > current_value:
+            myArray[j+1] = myArray[j]
+            insert_index = j
+        else:
+            break
+    myArray[insert_index] = current_value
+    
+print(myArray)    
+
+# QUICKSORT ALGORITHM
+def partition(array, low, high): # defines the paartition function
+
+#1)The partition function takes an array & 2 indices(low, high)
+#2)rearranges elements so all smaller elements are on the left
+#3)returns the final position of the pivot element
+
+    pivot = array[high] #selects the pivot element as the last element in the current sub-array
+    i = low - 1 #initializes i as the index of the last element smaller than the pivot
+    
+    for j in range(low, high): # loops through the array from low to high-1 (excluding pivot)
+        if array[j] <= pivot:# checks whether current element is < or = to pivot
+            i += 1
+            array[i], array[j] = array[j], array[i]
+    
+    array[i+1], array[high] = array[high], array[i+1]
+    return i+1
+    
+def quicksort(array, low=0, high=None) :
+    if high is None:
+        high = len(array) - 1
+        
+    if low < high:
+        pivot_index = partition(array, low, high)
+        quicksort(array, low, pivot_index-1)
+        quicksort(array, pivot_index+1, high)
+        
+MyList = [64, 34, 25, 5, 22, 11, 90, 12]
+quicksort(MyList)
+print(MyList)
